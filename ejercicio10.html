@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 10 </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        html,body{
+            height: 100%;
+            background: linear-gradient(rgb(129, 246, 224), rgb(75, 134, 185));
+        }
+
+
+    </style>
+    	<style type="text/css">
+            .submenu {
+                display: none;
+            }
+            .opacity {
+                opacity: 0.5;
+            }
+            li{
+                
+                list-style: none;
+            }            
+            li:hover{
+                color: rgb(30, 117, 13);
+                cursor: pointer;
+                list-style: none;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" >
+            <div class="col-md-12 text-center">
+                <a href="index.html">Menú principal</a>
+            </div> 
+            <div class="col-md-12 text-center">
+                <h1>Juego de Preguntas y Respuestas</h1>
+                <div id="question-container">
+                    <p id="question"></p>
+                    <ul id="options"></ul>
+                </div>
+                <button id="nextButton">Siguiente</button>
+                <p id="score"></p>
+            </div>              
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: '¿Cuál es la capital de Francia?',
+                options: ['París', 'Londres', 'Roma'],
+                correctAnswer: 'París'
+            },
+            {
+                question: '¿Cuál es el planeta más grande del sistema solar?',
+                options: ['Tierra', 'Marte', 'Júpiter'],
+                correctAnswer: 'Júpiter'
+            },
+            {
+                question: '¿Quién escribió "Romeo y Julieta"?',
+                options: ['Charles Dickens', 'Jane Austen', 'William Shakespeare'],
+                correctAnswer: 'William Shakespeare'
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionContainer = document.getElementById('question-container');
+        const questionText = document.getElementById('question');
+        const optionsList = document.getElementById('options');
+        const nextButton = document.getElementById('nextButton');
+        const scoreText = document.getElementById('score');
+
+        function showQuestion(index) {
+            const currentQuestion = questions[index];
+            questionText.textContent = currentQuestion.question;
+            optionsList.innerHTML = '';
+
+            currentQuestion.options.forEach((option, optionIndex) => {
+                const li = document.createElement('li');
+                li.textContent = option;
+                li.addEventListener('click', function() {
+                    checkAnswer(option, currentQuestion.correctAnswer);
+                });
+                optionsList.appendChild(li);
+            });
+        }
+
+        function checkAnswer(selectedOption, correctAnswer) {
+            if (selectedOption === correctAnswer) {
+                score++;
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                showQuestion(currentQuestionIndex);
+            } else {
+                showScore();
+            }
+        }
+
+        function showScore() {
+            questionContainer.style.display = 'none';
+            nextButton.style.display = 'none';
+            scoreText.textContent = `Puntuación final: ${score} de ${questions.length}`;
+        }
+
+        showQuestion(currentQuestionIndex);
+    </script>
+</body>
+</html>

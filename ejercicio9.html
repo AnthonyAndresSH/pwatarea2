@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 9</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        html,body{
+            height: 100%;
+            background: linear-gradient(rgb(129, 246, 224), rgb(75, 134, 185));
+        }
+
+
+    </style>
+    	<style type="text/css">
+            .submenu {
+                display: none;
+            }
+            .opacity {
+                opacity: 0.5;
+            }
+            li{
+                list-style: none;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" >
+            <div class="col-md-12 text-center">
+                <a href="index.html">Menú principal</a>
+            </div>   
+            <div class="col-md-12 text-center">
+                <h1>Contador Regresivo</h1>
+                <label for="hours">Horas:</label>
+                <input type="number" id="hours" min="0" value="0"><br>
+                <label for="minutes">Minutos:</label>
+                <input type="number" id="minutes" min="0" max="59" value="0"><br>
+                <label for="seconds">Segundos:</label>
+                <input type="number" id="seconds" min="0" max="59" value="0"><br>
+                <button id="startButton">Iniciar Contador</button>
+                <p id="countdown"></p>
+            </div>  
+        </div>
+    </div>
+    <script>
+        let countdownInterval;
+        let remainingTime = 0;
+
+        function updateCountdown() {
+            if (remainingTime <= 0) {
+                document.getElementById('countdown').textContent = '¡Tiempo Agotado!';
+                clearInterval(countdownInterval);
+            } else {
+                const hours = Math.floor(remainingTime / 3600);
+                const minutes = Math.floor((remainingTime % 3600) / 60);
+                const seconds = remainingTime % 60;
+
+                document.getElementById('countdown').textContent = `${hours} horas ${minutes} minutos ${seconds} segundos`;
+                remainingTime--;
+            }
+        }
+
+        function startCountdown() {
+            const hoursInput = parseInt(document.getElementById('hours').value);
+            const minutesInput = parseInt(document.getElementById('minutes').value);
+            const secondsInput = parseInt(document.getElementById('seconds').value);
+
+            remainingTime = (hoursInput * 3600) + (minutesInput * 60) + secondsInput;
+
+            if (isNaN(remainingTime) || remainingTime <= 0) {
+                alert('Ingresa un tiempo válido para comenzar el contador.');
+                return;
+            }
+
+            clearInterval(countdownInterval);
+            countdownInterval = setInterval(updateCountdown, 1000);
+
+            // Llama a la función para mostrar el tiempo restante inmediatamente
+            updateCountdown();
+        }
+
+        document.getElementById('startButton').addEventListener('click', startCountdown);
+    </script>
+</body>
+</html>

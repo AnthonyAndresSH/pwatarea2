@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 6 </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        html,body{
+            height: 100%;
+            background: linear-gradient(rgb(129, 246, 224), rgb(75, 134, 185));
+        }
+
+        .transparent-container {
+            background-color: transparent;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        li button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 text-center">
+                <a href="index.html">Menú principal</a>
+            </div>   
+            <div class="col-md-12 text-center" > 
+                <h1>Lista de Tareas</h1>
+                <input type="text" id="task" placeholder="Nueva tarea">
+                <button id="addTask">Agregar Tarea</button>
+                <ul id="taskList">
+                </ul>
+            </div>                         
+        </div>       
+    </div>        
+    <script>
+        document.getElementById('addTask').addEventListener('click', function() {
+            const taskInput = document.getElementById('task');
+            const taskList = document.getElementById('taskList');
+            const newTaskText = taskInput.value.trim();
+
+            if (newTaskText !== '') {
+                const li = document.createElement('li');
+                li.innerHTML = newTaskText + '<button>Eliminar</button>';
+                taskList.appendChild(li);
+                taskInput.value = '';
+
+                const deleteButton = li.querySelector('button');
+                deleteButton.addEventListener('click', function() {
+                    taskList.removeChild(li);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
